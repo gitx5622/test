@@ -52,6 +52,13 @@ ENV COMPOSER_ALLOW_SUPERUSER=1 \
 RUN chmod 700 \
         /usr/local/bin/composer
 
+# Set working directory
+WORKDIR /app
+
+ADD yii /app/
+ADD ./web /app/web/
+ADD ./config /app/config
+
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- \
         --filename=composer.phar \
@@ -63,7 +70,7 @@ RUN composer global require --optimize-autoloader \
         "hirak/prestissimo:${VERSION_PRESTISSIMO_PLUGIN}" && \
     composer global dumpautoload --optimize && \
     composer clear-cache
-    
+
 #Composer install
 RUN composer install --prefer-dist --optimize-autoloader --no-dev && \
     composer clear-cache
@@ -76,8 +83,6 @@ RUN if command -v a2enmod >/dev/null 2>&1; then \
 RUN curl -L https://raw.githubusercontent.com/yiisoft/yii2/master/contrib/completion/bash/yii \
         -o /etc/bash_completion.d/yii
 
-# Set working directory
-WORKDIR app
 
 RUN mkdir -p runtime web/assets && \
     chmod -R 777 runtime web/assets && \
