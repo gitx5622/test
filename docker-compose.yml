@@ -3,8 +3,8 @@ services:
   php:
     image: yiisoftware/yii2-php:7.2-apache
     volumes:
-      - ./:/var/www/html
-      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      - ./:/app:delegated
     container_name: webtest
     ports:
       - '8888:80'
@@ -17,9 +17,6 @@ services:
       MYSQL_DATABASE: cicd
       MYSQL_USER: root
       MYSQL_PASSWORD: Password123#@!
-    volumes:
-      - dbdata:/var/lib/mysql/
-      - ./mysql/my.cnf:/etc/mysql/my.cnf
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
