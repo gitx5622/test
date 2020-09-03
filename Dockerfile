@@ -11,14 +11,8 @@ WORKDIR /var/www/html/test
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
     locales \
-    zip \
-    jpegoptim optipng pngquant gifsicle \
     nano \
-    unzip \
     git \
     curl
 
@@ -29,13 +23,13 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN composer install --prefer-dist --optimize-autoloader --no-dev && \
-    composer clear-cache
+    composer clear-cache && \
+    composer update
 
 # Install extensions
-RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
-RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
-RUN docker-php-ext-install gd
-
+#RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
+#RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
+#RUN docker-php-ext-install gd
 
 # Copy existing application directory contents
 COPY . /var/www/html/test
