@@ -7,7 +7,7 @@ services:
       - ./:/app:delegated
     container_name: webtest
     ports:
-      - '8070:80'
+      - '8888:80'
 
   db:
     image: mysql
@@ -26,6 +26,6 @@ services:
       PMA_PASSWORD: Password123#@!
       UPLOAD_LIMIT: 3000000000
     ports:
-      - "8000:80"
+      - "8881:80"
     depends_on:
       - db
