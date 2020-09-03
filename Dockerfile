@@ -3,6 +3,13 @@ FROM yiisoftware/yii2-php:7.2-apache
 # PHP Docker image for Yii 2.0 Framework runtime
 # ==============================================
 # Install system packages for PHP extensions recommended for Yii 2.0 Framework
+# Set working directory
+WORKDIR /app
+
+ADD yii /app/
+ADD ./web /app/web/
+ADD ./config /app/config
+
 RUN apt-get update && \
     apt-get -y install \
         gnupg2 && \
@@ -51,13 +58,6 @@ ENV COMPOSER_ALLOW_SUPERUSER=1 \
 # Add GITHUB_API_TOKEN support for composer
 RUN chmod 700 \
         /usr/local/bin/composer
-
-# Set working directory
-WORKDIR /app
-
-ADD yii /app/
-ADD ./web /app/web/
-ADD ./config /app/config
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- \
