@@ -44,7 +44,7 @@ RUN docker-php-ext-install gd
 ENV COMPOSER_ALLOW_SUPERUSER=1 \
     PHP_USER_ID=33 \
     PHP_ENABLE_XDEBUG=0 \
-    PATH=/test:/test/vendor/bin:/root/.composer/vendor/bin:$PATH \
+    PATH=/app:/app/vendor/bin:/root/.composer/vendor/bin:$PATH \
     TERM=linux \
     VERSION_PRESTISSIMO_PLUGIN=^0.3.10
 
@@ -63,7 +63,8 @@ RUN composer global require --optimize-autoloader \
         "hirak/prestissimo:${VERSION_PRESTISSIMO_PLUGIN}" && \
     composer global dumpautoload --optimize && \
     composer clear-cache
-
+    
+#Composer install
 RUN composer install --prefer-dist --optimize-autoloader --no-dev && \
     composer clear-cache
 # Enable mod_rewrite for images with apache
@@ -76,7 +77,7 @@ RUN curl -L https://raw.githubusercontent.com/yiisoft/yii2/master/contrib/comple
         -o /etc/bash_completion.d/yii
 
 # Set working directory
-WORKDIR /var/www/html/test
+WORKDIR app
 
 RUN mkdir -p runtime web/assets && \
     chmod -R 777 runtime web/assets && \
