@@ -64,6 +64,8 @@ RUN composer global require --optimize-autoloader \
     composer global dumpautoload --optimize && \
     composer clear-cache
 
+RUN composer install --prefer-dist --optimize-autoloader --no-dev && \
+    composer clear-cache
 # Enable mod_rewrite for images with apache
 RUN if command -v a2enmod >/dev/null 2>&1; then \
         a2enmod rewrite headers \
