@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     zip \
     jpegoptim optipng pngquant gifsicle \
     nano \
+    mv \
     unzip \
     git \
     curl
@@ -25,6 +26,9 @@ RUN apt-get update && apt-get install -y \
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
+RUN curl -sS https://getcomposer.org/installer | php
+    sudo mv composer.phar /usr/local/bin/composer
+    
 RUN composer install --prefer-dist --optimize-autoloader --no-dev && \
     composer clear-cache
 
