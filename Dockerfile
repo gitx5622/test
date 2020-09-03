@@ -36,37 +36,15 @@ RUN apt-get update && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install PHP extensions required for Yii 2.0 Framework
-ARG X_LEGACY_GD_LIB=0
-RUN if [ $X_LEGACY_GD_LIB = 1 ]; then \
-        docker-php-ext-configure gd \
-                --with-freetype-dir=/usr/include/ \
-                --with-png-dir=/usr/include/ \
-                --with-jpeg-dir=/usr/include/; \
-    else \
-        docker-php-ext-configure gd \
-                --with-freetype=/usr/include/ \
-                --with-jpeg=/usr/include/; \
-    fi && \
-    docker-php-ext-configure bcmath && \
-    docker-php-ext-install \
-        soap \
-        zip \
-        curl \
-        bcmath \
-        exif \
-        gd \
-        iconv \
-        intl \
-        mbstring \
-        opcache \
-        pdo_mysql \
-        pdo_pgsql
-
+# Install extensions
+RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
+RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
+RUN docker-php-ext-install gd
 # Environment settings
 ENV COMPOSER_ALLOW_SUPERUSER=1 \
     PHP_USER_ID=33 \
     PHP_ENABLE_XDEBUG=0 \
-    PATH=/app:/app/vendor/bin:/root/.composer/vendor/bin:$PATH \
+    PATH=/test:/test/vendor/bin:/root/.composer/vendor/bin:$PATH \
     TERM=linux \
     VERSION_PRESTISSIMO_PLUGIN=^0.3.10
 
