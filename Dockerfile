@@ -90,6 +90,6 @@ RUN mkdir -p runtime web/assets && \
     chown -R www-data:www-data runtime web/assets
 
 # Expose port 9000 and start php-fpm server
-EXPOSE 8888
+EXPOSE 8887
 
 CMD ["yiisoftware/yii2-php:7.2-apache"]
