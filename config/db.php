@@ -2,7 +2,7 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;port:8881;dbname=cicd',
+    'dsn' => 'mysql:host=127.0.0.1;dbname=cicd',
     'username' => 'root',
     'password' => 'Password123',
     'charset' => 'utf8',
