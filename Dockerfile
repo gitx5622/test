@@ -4,6 +4,9 @@ FROM yiisoftware/yii2-php:7.2-apache
 # ==============================================
 # Install system packages for PHP extensions recommended for Yii 2.0 Framework
 # Set working directory
+
+RUN a2enmod rewrite
+
 WORKDIR /app
 
 ADD yii /app/
