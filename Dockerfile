@@ -71,6 +71,7 @@ RUN composer global require --optimize-autoloader \
     composer global dumpautoload --optimize && \
     composer clear-cache
 
+ADD composer.lock composer.json /app/
 #Composer install
 RUN composer install --prefer-dist --optimize-autoloader --no-dev && \
     composer clear-cache
