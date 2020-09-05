@@ -13,10 +13,10 @@ services:
     image: mysql
     container_name: dt
     environment:
-      MYSQL_ROOT_PASSWORD: Password123
+      MYSQL_ROOT_PASSWORD: Password123#@!
       MYSQL_DATABASE: cicd
       MYSQL_USER: root
-      MYSQL_PASSWORD: Password123
+      MYSQL_PASSWORD: Password123#@!
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -24,7 +24,7 @@ services:
     restart: always
     environment:
       PMA_USER: root
-      PMA_PASSWORD: Password123
+      PMA_PASSWORD: Password123#@!
       UPLOAD_LIMIT: 3000000000
     ports:
       - "8884:80"
