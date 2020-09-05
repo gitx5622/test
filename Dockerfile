@@ -9,10 +9,6 @@ RUN a2enmod rewrite
 
 WORKDIR /app
 
-ADD yii /app/
-ADD ./web /app/web/
-ADD ./config /app/config
-
 RUN apt-get update && \
     apt-get -y install \
         gnupg2 && \
@@ -75,24 +71,15 @@ RUN composer global require --optimize-autoloader \
     composer clear-cache
 
 ADD composer.lock composer.json /app/
+
 #Composer install
 RUN composer install --prefer-dist --optimize-autoloader --no-dev && \
     composer clear-cache
-# Enable mod_rewrite for images with apache
-RUN if command -v a2enmod >/dev/null 2>&1; then \
-        a2enmod rewrite headers \
-    ;fi
 
-# Install Yii framework bash autocompletion
-RUN curl -L https://raw.githubusercontent.com/yiisoft/yii2/master/contrib/completion/bash/yii \
-        -o /etc/bash_completion.d/yii
-
+ADD yii /app/
+ADD ./web /app/web/
+ADD ./config /app/config
 
 RUN mkdir -p runtime web/assets && \
     chmod -R 777 runtime web/assets && \
     chown -R www-data:www-data runtime web/assets
-
-# Expose port 9000 and start php-fpm server
-EXPOSE 8887
-
-CMD ["yiisoftware/yii2-php:7.2-apache"]
