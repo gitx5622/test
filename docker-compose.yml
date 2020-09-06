@@ -23,6 +23,7 @@ services:
     container_name: pt
     restart: always
     environment:
+      PMA_HOST: db
       PMA_USER: root
       PMA_PASSWORD: Password123#@!
       UPLOAD_LIMIT: 3000000000

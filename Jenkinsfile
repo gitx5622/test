@@ -23,6 +23,7 @@ pipeline {
                         }
                         success{
                            sh "composer install --prefer-dist --optimize-autoloader --no-dev"
+                           sh "composer update"
                         }
                         failure{
                             echo "Failed"
